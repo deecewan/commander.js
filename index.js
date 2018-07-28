@@ -484,16 +484,16 @@ Command.prototype.parse = function(argv) {
     })[0];
   }
 
+  console.log(result);
+
   if (this._execs[name] && typeof this._execs[name] !== 'function') {
-    return this.executeSubCommand(argv, args, parsed.unknown);
+    result.command = name;
   } else if (aliasCommand) {
     // is alias of a subCommand
-    args[0] = aliasCommand._name;
-    return this.executeSubCommand(argv, args, parsed.unknown);
+    result.command = aliasCommand._name;
   } else if (this.defaultExecutable) {
     // use the default subcommand
-    args.unshift(this.defaultExecutable);
-    return this.executeSubCommand(argv, args, parsed.unknown);
+    result.command = this.defaultExecutable;
   }
 
   return result;
